@@ -1,4 +1,4 @@
-// Package tracer is simple convenience wrapper around writing trace to a file.
+// Package tracer wraps the boilerplace code for runtime/trace.
 package tracer
 
 import (
@@ -19,8 +19,13 @@ func New(tracefile string) *Info {
 	return &Info{Filename: tracefile}
 }
 
-// Start starts the tracing
+// Start starts tracing.  If the Tracer was initialised with an empty filename,
+// Start it will not start the trace and will return nil.
 func (t *Info) Start() error {
+	if t.Filename == "" {
+		return nil
+	}
+
 	var err error
 	t.tf, err = os.Create(t.Filename)
 	if err != nil {
@@ -37,7 +42,8 @@ func (t *Info) Close() error {
 	return t.End()
 }
 
-// End ends the trace session.
+// End ends the trace session.  If the tracing has not been initialised, it does
+// nothing and returns nil.
 func (t *Info) End() error {
 	if t.tf == nil {
 		return nil
