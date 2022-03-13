@@ -30,7 +30,7 @@ func run(tracefile string) error {
 	}
 	defer t.Close()
 
-    // do something
+	// do something
 
 	return nil
 }
@@ -73,9 +73,9 @@ The easiest solution is to extract the logic into a run function:
 
 ```go
 func main() {
-    if err:=run(); err!=nil{
-        log.Fatal(err)
-    }
+	if err:=run(); err!=nil{
+		log.Fatal(err)
+	}
 }
 
 func run() error {
@@ -83,18 +83,18 @@ func run() error {
 	if err != nil {
 		log.Fatalf("failed to create trace output file: %s", err)
 	}
-    defer tf.Close()
+	defer tf.Close()
 	if err := trace.Start(tf); err != nil {
 		log.Fatalf("failed to start trace: %s", err)
 	}
-    defer tf.Stop()
+	defer tf.Stop()
 
-    // call your functions
-    // do your magic
-    // stop all wars
-    // make this world a happier place
+	// call your functions
+	// do your magic
+	// stop all wars
+	// make this world a happier place
 
-    return nil
+	return nil
 }
 ```
 With this approach, unless the programme panics somewhere, `Stop` and `Close`
