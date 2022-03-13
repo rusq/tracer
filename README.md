@@ -1,6 +1,9 @@
 # tracer
+
+[![Go Reference](https://pkg.go.dev/badge/github.com/rusq/tracer.svg)](https://pkg.go.dev/github.com/rusq/tracer)
+
 Trace wrapper package - wraps the boilerplace code for the standard
-`runtime/trace`.
+[runtime/trace](https://pkg.go.dev/runtime/trace).
 
 ## Getting started
 
