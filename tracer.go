@@ -44,9 +44,15 @@ func (t *Info) Close() error {
 
 // End ends the trace session.  If the tracing has not been initialised, it does
 // nothing and returns nil.
-func (t *Info) End() error {
+func (t *Info) End() (err error) {
+	defer func() {
+		// sometimes tracer panics, we don't want to crash the caller.
+		if r := recover(); r != nil {
+			err = fmt.Errorf("trace panic recovered: %v", r)
+		}
+	}()
 	if t.tf == nil {
-		return nil
+		return
 	}
 	if trace.IsEnabled() {
 		trace.Stop()
@@ -55,5 +61,5 @@ func (t *Info) End() error {
 		return err
 	}
 	t.tf = nil
-	return nil
+	return
 }
